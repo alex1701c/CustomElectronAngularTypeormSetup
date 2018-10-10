@@ -3,7 +3,6 @@ import { remote } from 'electron';
 import { environment } from '../../../environments/environment';
 
 export class Settings {
-
     public static dbFolder: string;
     public static dbPath: string;
     public static appPath: string;
@@ -15,17 +14,16 @@ export class Settings {
     }
 
     private static getPaths() {
-
-        if(environment.production){
+        if (environment.production) {
             this.dataSubFolder = '/';
             Settings.appPath = remote.app.getPath('userData');
         } else {
             // return folder where app is running
-            this.dataSubFolder = 'dist/assets/data';
+            this.dataSubFolder = 'src/app/data-access/databases';
             Settings.appPath = remote.app.getAppPath();
         }
 
         Settings.dbFolder = path.join(Settings.appPath, Settings.dataSubFolder);
-        Settings.dbPath = path.join(Settings.dbFolder, this.dbName)
+        Settings.dbPath = path.join(Settings.dbFolder, this.dbName);
     }
 }

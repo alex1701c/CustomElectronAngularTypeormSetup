@@ -1,14 +1,13 @@
-import {Component} from '@angular/core';
-import {DatabaseService} from "./data-access/database.service";
-import {User} from "./data-access/entities/user.entity";
+import { Component } from '@angular/core';
+import { DatabaseService } from './data-access/database.service';
+import { User } from './data-access/entities/user.entity';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./styles/index.scss']
 })
 export class AppComponent {
-
     users: User[] = [];
     displayedColumns: string[] = ['Id', 'FirstName', 'LastName', 'Age'];
 
@@ -20,24 +19,23 @@ export class AppComponent {
         this.getUsers();
     }
 
-    getUsers(){
-        this.databaseService
-            .connection
-            .then(() => User.find())
-            .then(users => {
-                this.users = users;
-            })
+    getUsers() {
+        this.databaseService.connection.then(() => User.find()).then(users => {
+            this.users = users;
+        });
     }
 
-    addUser(){
+    addUser() {
         const user = new User();
 
         user.FirstName = this.firstName;
         user.LastName = this.lastName;
         user.Age = +this.age;
+        if (!user.Age) {
+            user.Age = 0;
+        }
 
-        this.databaseService
-            .connection
+        this.databaseService.connection
             .then(() => user.save())
             .then(() => {
                 this.getUsers();
@@ -46,7 +44,6 @@ export class AppComponent {
                 this.firstName = '';
                 this.lastName = '';
                 this.age = '';
-            })
+            });
     }
-
 }
