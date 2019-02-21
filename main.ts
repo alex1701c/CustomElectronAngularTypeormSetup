@@ -5,14 +5,14 @@ import * as url from 'url';
 interface ProcessEnv {
     [key: string]: any;
 }
-let proccess_env: ProcessEnv = process.env;
+const proccess_env: ProcessEnv = process.env;
 proccess_env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 
 let win: BrowserWindow = null;
 
 // detect serve mode
 const args = process.argv.slice(1);
-let serve: boolean = args.some(val => val === '--serve');
+const serve: boolean = args.some(val => val === '--serve');
 
 function createWindow() {
     win = new BrowserWindow({ width: 800, height: 600 });
@@ -28,7 +28,6 @@ function createWindow() {
                 pathname: path.join(__dirname, `/dist/index.html`),
                 protocol: 'file:',
                 slashes: true
-                // icon: path.join(__dirname, 'assets/icons/favicon.png')
             })
         );
     }
